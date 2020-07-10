@@ -1,0 +1,29 @@
+问：删除数据库中除了id其他字段值完全一样的数据
+解：
+  DELETE FROM DEMO ID IN (
+    SELECT T1.ID FROM DEMO T1 WHERE (T1.A,T1.B,T1.C,T1.D) IN (
+      SELECT T.A,T.B,T.C,T.D FROM DEMO T GROUP BY T.A,T.B,T.C,T.D HAVING COUNT(*) > 1
+    )
+  );
+
+问：统计access_log中某个接口的qps
+解：
+  tail -f access_log | grep -r api | awk -F '|' {print substr('$1,1,19')} | uniq -c
+  按照log格式使用awk -F指定分隔符号 在使用uniq -c去重 其中awk里是截取时间字段 用于展示统计
+  
+问：php-fpm是什么及使用场景
+解：
+   php-fpm是fasecgi的进程管理器
+   使用场景：平滑重启，优化文件上传，动态/静态子进程产生，慢日志记录
+   
+问：git使用命令（各个缓冲区回滚命令）
+解：
+   未add回滚：git checkout --文件
+   已add回滚：git reset HEAD
+   已commit回滚：git reset  HEAD^ 
+   已push回滚：git reset --hard commit_id
+
+还有一道正则匹配替换题~~记得看正则！！！
+
+  
+  
